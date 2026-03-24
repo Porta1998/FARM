@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+<html class="light" lang="it"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed": "#f1f6e1",
+              "surface-bright": "#faf9f6",
+              "primary-dim": "#395a3b",
+              "surface-variant": "#e0e4de",
+              "surface-container-low": "#f4f4f0",
+              "tertiary": "#5c6151",
+              "inverse-primary": "#d7fed4",
+              "surface-dim": "#d6dbd5",
+              "outline-variant": "#afb3ae",
+              "on-secondary-container": "#4b5449",
+              "secondary-dim": "#4c564b",
+              "on-error-container": "#742410",
+              "primary-fixed": "#c6edc4",
+              "tertiary-fixed-dim": "#e3e8d3",
+              "background": "#faf9f6",
+              "secondary-fixed": "#dbe5d7",
+              "error-dim": "#5c1202",
+              "on-surface-variant": "#5c605c",
+              "on-error": "#fff7f6",
+              "secondary-container": "#dbe5d7",
+              "on-secondary-fixed-variant": "#555e53",
+              "primary-fixed-dim": "#b8deb6",
+              "primary-container": "#c6edc4",
+              "on-tertiary-fixed": "#464c3c",
+              "on-tertiary-fixed-variant": "#636858",
+              "secondary": "#586256",
+              "on-primary-fixed": "#264629",
+              "primary": "#456646",
+              "on-tertiary-container": "#585e4e",
+              "on-primary": "#e4ffe0",
+              "error": "#9e422c",
+              "tertiary-dim": "#505545",
+              "on-primary-container": "#38593a",
+              "error-container": "#fe8b70",
+              "on-primary-fixed-variant": "#426344",
+              "surface-container-highest": "#e0e4de",
+              "surface-tint": "#456646",
+              "on-secondary-fixed": "#394237",
+              "inverse-on-surface": "#9d9d9a",
+              "on-secondary": "#f2fced",
+              "secondary-fixed-dim": "#cdd7c9",
+              "surface-container": "#edeeea",
+              "tertiary-container": "#f1f6e1",
+              "surface-container-lowest": "#ffffff",
+              "surface": "#faf9f6",
+              "on-tertiary": "#f6fbe6",
+              "surface-container-high": "#e6e9e4",
+              "on-background": "#2f3430",
+              "inverse-surface": "#0d0f0d",
+              "outline": "#777c77",
+              "on-surface": "#2f3430"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Manrope"],
+              "label": ["Manrope"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      body {
+        font-family: 'Manrope', sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-40">
+<!-- Top Navigation Anchor -->
+<header class="fixed top-0 w-full z-50 bg-[#faf9f6]/70 dark:bg-[#1a1c18]/70 backdrop-blur-xl shadow-[0_40px_40px_rgba(0,0,0,0.04)] flex items-center justify-between px-6 py-4 w-full">
+<div class="flex items-center gap-4">
+<button class="text-[#456646] active:scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-manrope text-lg font-semibold tracking-tight text-[#456646]">I tuoi flussi</h1>
+</div>
+<div class="flex items-center gap-2">
+<div class="flex gap-1">
+<div class="h-1.5 w-4 bg-primary-container rounded-full"></div>
+<div class="h-1.5 w-8 bg-primary rounded-full"></div>
+<div class="h-1.5 w-4 bg-primary-container rounded-full"></div>
+</div>
+<span class="font-label text-[10px] font-bold tracking-widest uppercase text-primary ml-2">Passo 2 di 3</span>
+</div>
+</header>
+<main class="pt-28 px-6 max-w-2xl mx-auto">
+<!-- Editorial Display Moment -->
+<section class="mb-12">
+<h2 class="text-[1.5rem] font-semibold text-on-surface leading-tight mb-2">Quali sono le tue entrate?</h2>
+<p class="text-on-surface-variant body-md mb-8">Definisci le tue entrate ricorrenti per visualizzare la tua capacità di risparmio.</p>
+<!-- Hero Balance Card -->
+<div class="relative overflow-hidden p-10 rounded-xl bg-surface-container-lowest shadow-[0_40px_40px_rgba(0,0,0,0.04)]">
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary-container/20 rounded-full -mr-20 -mt-20 blur-3xl"></div>
+<div class="relative z-10">
+<span class="font-label text-[0.75rem] font-bold tracking-widest uppercase text-on-primary-container/60 mb-2 block">Totale Entrate Mensili</span>
+<div class="flex items-baseline gap-2">
+<span class="text-[3.5rem] font-extrabold tracking-tighter text-on-surface">€2.850</span>
+<span class="text-[1.5rem] font-semibold text-on-surface-variant">,00</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Dynamic Entry List (Organic Bento/Cards) -->
+<section class="space-y-4">
+<!-- Item: Stipendio -->
+<div class="bg-surface-container-low p-8 rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-6 transition-all hover:bg-surface-container-high group">
+<div class="flex items-center gap-5">
+<div class="w-14 h-14 rounded-full bg-surface-container-lowest flex items-center justify-center shadow-sm text-primary">
+<span class="material-symbols-outlined text-3xl" data-icon="payments">payments</span>
+</div>
+<div>
+<h3 class="title-md font-semibold text-on-surface">Stipendio</h3>
+<p class="text-on-surface-variant text-sm">Entrata principale fissa</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant font-medium">€</span>
+<input class="w-32 pl-8 pr-4 py-3 bg-surface-container-highest border-none rounded-md focus:ring-1 focus:ring-primary/20 text-right font-semibold text-on-surface transition-all" type="text" value="2.400"/>
+</div>
+<div class="px-4 py-3 bg-primary-container/30 text-primary font-bold text-[10px] tracking-widest uppercase rounded-md">Mensile</div>
+</div>
+</div>
+<!-- Item: Bonus/Extra -->
+<div class="bg-surface-container-low p-8 rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-6 transition-all hover:bg-surface-container-high group">
+<div class="flex items-center gap-5">
+<div class="w-14 h-14 rounded-full bg-surface-container-lowest flex items-center justify-center shadow-sm text-primary">
+<span class="material-symbols-outlined text-3xl" data-icon="redeem">redeem</span>
+</div>
+<div>
+<h3 class="title-md font-semibold text-on-surface">Bonus</h3>
+<p class="text-on-surface-variant text-sm">Premi o incentivi</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant font-medium">€</span>
+<input class="w-32 pl-8 pr-4 py-3 bg-surface-container-highest border-none rounded-md focus:ring-1 focus:ring-primary/20 text-right font-semibold text-on-surface transition-all" placeholder="0" type="text"/>
+</div>
+<div class="px-4 py-3 bg-surface-container-highest text-on-surface-variant font-bold text-[10px] tracking-widest uppercase rounded-md">Mensile</div>
+</div>
+</div>
+<!-- Item: Altro -->
+<div class="bg-surface-container-low p-8 rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-6 transition-all hover:bg-surface-container-high group border-2 border-dashed border-outline-variant/20">
+<div class="flex items-center gap-5">
+<div class="w-14 h-14 rounded-full bg-surface-container-lowest/50 flex items-center justify-center text-outline">
+<span class="material-symbols-outlined text-3xl" data-icon="add">add</span>
+</div>
+<div>
+<h3 class="title-md font-semibold text-on-surface">Altro</h3>
+<p class="text-on-surface-variant text-sm">Aggiungi altre entrate</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant font-medium">€</span>
+<input class="w-32 pl-8 pr-4 py-3 bg-surface-container-highest border-none rounded-md focus:ring-1 focus:ring-primary/20 text-right font-semibold text-on-surface transition-all" type="text" value="450"/>
+</div>
+<div class="px-4 py-3 bg-primary-container/30 text-primary font-bold text-[10px] tracking-widest uppercase rounded-md">Mensile</div>
+</div>
+</div>
+</section>
+<!-- Growth Bloom Decorative Element -->
+<div class="mt-16 flex flex-col items-center">
+<div class="w-24 h-24 relative">
+<svg class="w-full h-full fill-primary-container opacity-40 animate-pulse" viewbox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+<path d="M44.7,-76.4C58.3,-69.2,70.1,-58.5,78.9,-45.5C87.7,-32.5,93.5,-17.3,92.8,-2.4C92,12.5,84.7,27.1,75.1,39.9C65.5,52.7,53.6,63.7,39.9,71.7C26.1,79.7,10.6,84.7,-4.8,93C-20.2,101.3,-35.6,112.9,-48.3,109C-61,105.1,-71,85.7,-78.6,68.9C-86.2,52.1,-91.4,37.8,-92.4,23.5C-93.5,9.2,-90.4,-5.2,-84.9,-18.2C-79.5,-31.2,-71.7,-42.8,-61.4,-52.1C-51.1,-61.4,-38.3,-68.4,-25.6,-76.1C-12.9,-83.8,-0.3,-92.2,13.2,-91.1C26.7,-90.1,44.7,-76.4,44.7,-76.4Z" transform="translate(100 100)"></path>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-4xl" data-icon="eco" style="font-variation-settings: 'FILL' 1;">eco</span>
+</div>
+</div>
+<p class="text-on-surface-variant text-[0.75rem] font-bold tracking-widest uppercase mt-4">Stai crescendo bene</p>
+</div>
+</main>
+<!-- Navigation Shell (Bottom) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-between items-center px-10 pb-10 pt-6 bg-[#faf9f6]/70 dark:bg-[#1a1c18]/70 backdrop-blur-3xl shadow-[0_-20px_40px_rgba(0,0,0,0.03)] z-50 rounded-t-[3rem]">
+<!-- Inactive Action -->
+<button class="flex flex-col items-center justify-center text-[#2f3430] dark:text-[#edeeea] bg-[#edeeea] dark:bg-[#2f3430] rounded-full px-8 py-3 hover:brightness-110 transition-all active:scale-[0.98] duration-200">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-xl" data-icon="chevron_left">chevron_left</span>
+<span class="font-manrope text-[12px] font-bold tracking-widest uppercase">Indietro</span>
+</div>
+</button>
+<!-- Active Action -->
+<button class="flex flex-col items-center justify-center bg-[#456646] text-white rounded-full px-8 py-3 hover:brightness-110 transition-all active:scale-[0.98] duration-200">
+<div class="flex items-center gap-2">
+<span class="font-manrope text-[12px] font-bold tracking-widest uppercase">Continua</span>
+<span class="material-symbols-outlined text-xl" data-icon="chevron_right">chevron_right</span>
+</div>
+</button>
+</nav>
+</body></html>
