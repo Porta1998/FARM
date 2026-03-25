@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -101,36 +102,52 @@
 <span class="text-2xl font-extrabold tracking-tighter text-primary">FARM</span>
 </div>
 <div class="flex items-center gap-4">
-<button class="material-symbols-outlined text-primary hover:opacity-80 transition-opacity scale-95 duration-200">notifications</button>
+<span class="text-sm font-bold text-on-surface-variant mr-2">{{ current_user.username }}</span>
+<a href="/logout" class="material-symbols-outlined text-primary hover:opacity-80 transition-opacity scale-95 duration-200">logout</a>
 </div>
 </div>
 </header>
 <main class="pt-24 px-6 max-w-screen-xl mx-auto space-y-12">
 <!-- Hero Section: Saldo -->
 <section class="mt-8">
-<div class="space-y-1">
-<p class="text-[0.75rem] font-bold uppercase tracking-[0.05em] text-on-surface-variant">SALDO ATTUALE</p>
-<h1 class="text-[3.5rem] font-extrabold tracking-tight text-on-surface leading-none">€12.450,00</h1>
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-8">
+    <div class="space-y-1">
+        <p class="text-[0.75rem] font-bold uppercase tracking-[0.05em] text-on-surface-variant">SALDO ATTUALE</p>
+        <h1 class="text-[3.5rem] font-extrabold tracking-tight text-on-surface leading-none">€{{ "%.2f"|format(balance) }}</h1>
+    </div>
+    <div class="flex-1 max-w-md h-32 bg-surface-container-low rounded-xl p-4">
+        <canvas id="miniChart"></canvas>
+    </div>
 </div>
 </section>
 <!-- Goal Card: OBIETTIVO DI RISPARMIO -->
+{% if current_user.profile.goal_name %}
 <section>
 <div class="bg-surface-container-low rounded-xl p-8 glass-hero relative overflow-hidden">
 <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
 <div class="space-y-4 max-w-md">
 <div class="space-y-1">
 <p class="text-[0.75rem] font-bold uppercase tracking-[0.05em] text-primary">OBIETTIVO DI RISPARMIO</p>
-<h2 class="text-2xl font-semibold text-on-surface">Nuova Serra</h2>
+<h2 class="text-2xl font-semibold text-on-surface">{{ current_user.profile.goal_name }}</h2>
 </div>
-<p class="text-body-md text-on-surface-variant">Stai facendo un ottimo lavoro. Mancano solo €1.850 per completare il tuo progetto botanico.</p>
+<p class="text-body-md text-on-surface-variant">
+    {% set goal_rem = current_user.profile.goal_target - balance %}
+    {% if goal_rem > 0 %}
+    Stai facendo un ottimo lavoro. Mancano €{{ "%.2f"|format(goal_rem) }} per completare il tuo obiettivo.
+    {% else %}
+    Complimenti! Hai raggiunto il tuo obiettivo di risparmio.
+    {% endif %}
+</p>
 </div>
 <div class="flex-1 w-full max-w-md space-y-3">
 <div class="flex justify-between items-end">
-<span class="text-[2rem] font-extrabold text-primary">85%</span>
-<span class="text-label-md font-bold text-on-surface-variant">€10.600 / €12.450</span>
+    {% set percent = (balance / current_user.profile.goal_target * 100) if current_user.profile.goal_target > 0 else 0 %}
+    {% if percent > 100 %}{% set percent = 100 %}{% endif %}
+<span class="text-[2rem] font-extrabold text-primary">{{ "%.0f"|format(percent) }}%</span>
+<span class="text-label-md font-bold text-on-surface-variant">€{{ "%.2f"|format(balance) }} / €{{ "%.2f"|format(current_user.profile.goal_target) }}</span>
 </div>
 <div class="h-4 w-full bg-surface-container-highest rounded-full overflow-hidden">
-<div class="h-full bg-primary rounded-full transition-all duration-1000" style="width: 85%"></div>
+<div class="h-full bg-primary rounded-full transition-all duration-1000" style="width: {{ percent }}%"></div>
 </div>
 </div>
 </div>
@@ -138,9 +155,13 @@
 <div class="absolute -right-12 -bottom-12 w-48 h-48 bg-primary-container/20 rounded-full blur-3xl"></div>
 </div>
 </section>
+{% endif %}
 <!-- Bento Section: Previsione di Crescita -->
 <section class="space-y-6">
-<h3 class="text-xl font-semibold text-on-surface px-1">Previsione di Crescita</h3>
+<div class="flex justify-between items-end px-1">
+    <h3 class="text-xl font-semibold text-on-surface">Previsione di Crescita</h3>
+    <a href="/confronto" class="text-sm font-bold text-primary hover:opacity-80">Confronta</a>
+</div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 <!-- Card 1 Month -->
 <div class="bg-surface-container-lowest rounded-lg p-6 shadow-sm shadow-black/5 hover:scale-[0.98] transition-transform duration-150 group">
@@ -152,8 +173,7 @@
 </div>
 <p class="text-sm font-medium text-on-surface-variant mb-1">Tra 1 Mese</p>
 <div class="flex items-baseline gap-2">
-<span class="text-2xl font-bold text-on-surface">+€450</span>
-<span class="text-xs font-bold text-primary">+3.6%</span>
+<span class="text-2xl font-bold text-on-surface">{{ '+' if monthly_net >= 0 else '' }}€{{ "%.2f"|format(monthly_net) }}</span>
 </div>
 </div>
 <!-- Card 6 Months -->
@@ -166,8 +186,7 @@
 </div>
 <p class="text-sm font-medium text-on-surface-variant mb-1">Tra 6 Mesi</p>
 <div class="flex items-baseline gap-2">
-<span class="text-2xl font-bold text-on-surface">+€2.840</span>
-<span class="text-xs font-bold text-primary">+22.8%</span>
+<span class="text-2xl font-bold text-on-surface">{{ '+' if monthly_net >= 0 else '' }}€{{ "%.2f"|format(monthly_net * 6) }}</span>
 </div>
 </div>
 <!-- Card 12 Months -->
@@ -180,8 +199,7 @@
 </div>
 <p class="text-sm font-medium text-on-primary/70 mb-1">Tra 12 Mesi</p>
 <div class="flex items-baseline gap-2">
-<span class="text-2xl font-bold">+€6.120</span>
-<span class="text-xs font-bold text-on-primary/90">+49.1%</span>
+<span class="text-2xl font-bold">{{ '+' if monthly_net >= 0 else '' }}€{{ "%.2f"|format(monthly_net * 12) }}</span>
 </div>
 </div>
 </div>
@@ -190,66 +208,110 @@
 <section class="space-y-6">
 <div class="flex justify-between items-end px-1">
 <h3 class="text-xl font-semibold text-on-surface">Pagamenti in Arrivo</h3>
-<button class="text-sm font-bold text-primary hover:opacity-80">Vedi tutti</button>
+<a href="/riepilogo" class="text-sm font-bold text-primary hover:opacity-80">Vedi tutti</a>
 </div>
 <div class="bg-surface-container-low rounded-lg p-2 space-y-2">
-<!-- Payment Item 1 -->
+{% for payment in upcoming %}
 <div class="bg-surface-container-lowest rounded-md p-5 flex items-center justify-between">
 <div class="flex items-center gap-4">
 <div class="w-12 h-12 bg-surface-container rounded-full flex items-center justify-center text-on-surface-variant">
-<span class="material-symbols-outlined">router</span>
+<span class="material-symbols-outlined">receipt_long</span>
 </div>
 <div>
-<h4 class="font-semibold text-on-surface">Fibra Ottica</h4>
-<p class="text-xs text-on-surface-variant font-medium">Scadenza: 14 Maggio</p>
+<h4 class="font-semibold text-on-surface capitalize">{{ payment.category }}</h4>
+<p class="text-xs text-on-surface-variant font-medium">Scadenza: Mensile</p>
 </div>
 </div>
 <div class="text-right">
-<p class="font-bold text-on-surface">€39,90</p>
+<p class="font-bold text-on-surface">€{{ "%.2f"|format(payment.amount) }}</p>
 <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">RICORRENTE</p>
 </div>
 </div>
-<!-- Payment Item 2 -->
+{% endfor %}
+</div>
+</section>
+
+<!-- List Section: Attività Recenti -->
+<section class="space-y-6">
+<div class="flex justify-between items-end px-1">
+<h3 class="text-xl font-semibold text-on-surface">Attività Recenti</h3>
+</div>
+<div class="bg-surface-container-low rounded-lg p-2 space-y-2">
+{% for tx in recent_txs %}
 <div class="bg-surface-container-lowest rounded-md p-5 flex items-center justify-between">
 <div class="flex items-center gap-4">
 <div class="w-12 h-12 bg-surface-container rounded-full flex items-center justify-center text-on-surface-variant">
-<span class="material-symbols-outlined">cloud_done</span>
+<span class="material-symbols-outlined">{{ 'payments' if tx.type == 'income' else 'shopping_cart' }}</span>
 </div>
 <div>
-<h4 class="font-semibold text-on-surface">Cloud Storage</h4>
-<p class="text-xs text-on-surface-variant font-medium">Scadenza: 18 Maggio</p>
+<h4 class="font-semibold text-on-surface capitalize">{{ tx.category }}</h4>
+<p class="text-xs text-on-surface-variant font-medium">{{ tx.date.strftime('%d %b, %H:%M') }}</p>
 </div>
 </div>
 <div class="text-right">
-<p class="font-bold text-on-surface">€9,99</p>
-<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">ABBONAMENTO</p>
+<p class="font-bold {{ 'text-primary' if tx.type == 'income' else 'text-on-surface' }}">
+    {{ '+' if tx.type == 'income' else '-' }}€{{ "%.2f"|format(tx.amount) }}
+</p>
 </div>
 </div>
+{% endfor %}
 </div>
 </section>
 <!-- Aesthetic spacer for bottom nav -->
 <div class="h-20"></div>
 </main>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('/api/chart-data')
+            .then(response => response.json())
+            .then(data => {
+                const ctx = document.getElementById('miniChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            data: data.projection,
+                            borderColor: '#456646',
+                            backgroundColor: 'rgba(69, 102, 70, 0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: { display: false },
+                            y: { display: false }
+                        }
+                    }
+                });
+            });
+    });
+</script>
 <!-- BottomNavBar -->
 <nav class="fixed bottom-0 w-full z-50 rounded-t-[3rem] pb-safe bg-[#ffffff]/70 backdrop-blur-3xl shadow-[0_-4px_40px_0_rgba(0,0,0,0.04)]">
 <div class="flex justify-around items-center px-4 py-3 w-full max-w-screen-xl mx-auto">
 <!-- Active Tab: Dashboard -->
-<a class="flex flex-col items-center justify-center bg-[#edeeea] text-[#456646] rounded-[2rem] px-5 py-2 transition-all active:scale-98" href="#">
+<a class="flex flex-col items-center justify-center bg-[#edeeea] text-[#456646] rounded-[2rem] px-5 py-2 transition-all active:scale-98" href="/">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home_max</span>
 <span class="font-['Manrope'] text-[10px] font-bold uppercase tracking-[0.05em] mt-1">Dashboard</span>
 </a>
 <!-- Tab: Inserimento -->
-<a class="flex flex-col items-center justify-center text-[#2f3430]/40 px-5 py-2 hover:bg-[#f4f4f0] transition-colors rounded-[2rem] active:scale-98" href="#">
+<a class="flex flex-col items-center justify-center text-[#2f3430]/40 px-5 py-2 hover:bg-[#f4f4f0] transition-colors rounded-[2rem] active:scale-98" href="/insert">
 <span class="material-symbols-outlined">add_circle</span>
 <span class="font-['Manrope'] text-[10px] font-bold uppercase tracking-[0.05em] mt-1">Inserimento</span>
 </a>
 <!-- Tab: Ricorrenti -->
-<a class="flex flex-col items-center justify-center text-[#2f3430]/40 px-5 py-2 hover:bg-[#f4f4f0] transition-colors rounded-[2rem] active:scale-98" href="#">
+<a class="flex flex-col items-center justify-center text-[#2f3430]/40 px-5 py-2 hover:bg-[#f4f4f0] transition-colors rounded-[2rem] active:scale-98" href="/riepilogo">
 <span class="material-symbols-outlined">event_repeat</span>
 <span class="font-['Manrope'] text-[10px] font-bold uppercase tracking-[0.05em] mt-1">Ricorrenti</span>
 </a>
 <!-- Tab: Simulatore -->
-<a class="flex flex-col items-center justify-center text-[#2f3430]/40 px-5 py-2 hover:bg-[#f4f4f0] transition-colors rounded-[2rem] active:scale-98" href="#">
+<a class="flex flex-col items-center justify-center text-[#2f3430]/40 px-5 py-2 hover:bg-[#f4f4f0] transition-colors rounded-[2rem] active:scale-98" href="/simulatore">
 <span class="material-symbols-outlined">query_stats</span>
 <span class="font-['Manrope'] text-[10px] font-bold uppercase tracking-[0.05em] mt-1">Simulatore</span>
 </a>

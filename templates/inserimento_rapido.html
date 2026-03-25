@@ -101,6 +101,7 @@
 </div>
 </div>
 </header>
+<form action="/insert" method="POST" id="insertForm">
 <main class="pt-24 px-6 max-w-md mx-auto">
 <!-- Section Header -->
 <div class="mb-8">
@@ -112,87 +113,137 @@
 <div class="flex-1">
 <label class="text-[0.75rem] font-bold uppercase tracking-[0.05em] text-outline mb-1 block">DETTAGLIO VOCE</label>
 <div class="flex items-baseline gap-2">
-<span class="text-[3.5rem] font-extrabold tracking-tighter text-on-surface leading-none">-10</span>
-<span class="text-[1.5rem] font-medium text-outline-variant">pranzo</span>
+<span class="text-[3.5rem] font-extrabold tracking-tighter text-on-surface leading-none" id="displayAmount">-0</span>
+<span class="text-[1.5rem] font-medium text-outline-variant" id="displayCategory">Altro</span>
 </div>
 </div>
-<button class="w-14 h-14 bg-primary rounded-full flex items-center justify-center text-on-primary shadow-lg shadow-primary/20 active:scale-95 transition-transform">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">mic</span>
-</button>
+<input type="hidden" name="amount" id="hiddenAmount" value="0">
+<input type="hidden" name="category" id="hiddenCategory" value="Altro">
+<input type="hidden" name="type" id="hiddenType" value="expense">
 </div>
 </div>
-<!-- Impact Banner -->
-<div class="bg-primary-container/30 backdrop-blur-md rounded-lg p-4 mb-8 flex items-center gap-4">
-<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-<span class="material-symbols-outlined text-xl">trending_down</span>
-</div>
-<div>
-<p class="text-[0.75rem] font-bold uppercase tracking-[0.05em] text-primary">IMPATTO SUL SALDO ANNUALE</p>
-<p class="text-[1.125rem] font-bold text-on-primary-container">-€120</p>
-</div>
-</div>
+
 <!-- Mode Toggle -->
 <div class="bg-surface-container-low p-1.5 rounded-full flex mb-8">
-<button class="flex-1 py-2.5 px-6 rounded-full text-[0.875rem] font-bold bg-surface-container-lowest text-primary shadow-sm transition-all">Singola</button>
-<button class="flex-1 py-2.5 px-6 rounded-full text-[0.875rem] font-medium text-outline-variant hover:text-on-surface-variant transition-colors">Ricorrente</button>
+<button type="button" onclick="setType('expense')" id="btnExpense" class="flex-1 py-2.5 px-6 rounded-full text-[0.875rem] font-bold bg-surface-container-lowest text-primary shadow-sm transition-all">Spesa</button>
+<button type="button" onclick="setType('income')" id="btnIncome" class="flex-1 py-2.5 px-6 rounded-full text-[0.875rem] font-medium text-outline-variant hover:text-on-surface-variant transition-colors">Entrata</button>
 </div>
 <!-- Category Grid -->
 <div class="grid grid-cols-2 gap-3 mb-10">
-<button class="bg-surface-container-low hover:bg-surface-container-high p-5 rounded-lg flex flex-col items-center gap-2 transition-all group">
+<button type="button" onclick="setCategory('Caffè')" class="cat-btn bg-surface-container-low hover:bg-surface-container-high p-5 rounded-lg flex flex-col items-center gap-2 transition-all group">
 <span class="material-symbols-outlined text-primary text-3xl group-hover:scale-110 transition-transform">coffee</span>
 <span class="text-[0.75rem] font-bold uppercase tracking-[0.05em] text-on-secondary-container">CAFFÈ</span>
 </button>
-<button class="bg-surface-container-low hover:bg-surface-container-high p-5 rounded-lg flex flex-col items-center gap-2 transition-all group border-2 border-primary/20">
+<button type="button" onclick="setCategory('Pranzo')" class="cat-btn bg-surface-container-low hover:bg-surface-container-high p-5 rounded-lg flex flex-col items-center gap-2 transition-all group">
 <span class="material-symbols-outlined text-primary text-3xl group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1;">restaurant</span>
 <span class="text-[0.75rem] font-bold uppercase tracking-[0.05em] text-on-secondary-container">PRANZO</span>
 </button>
-<button class="bg-surface-container-low hover:bg-surface-container-high p-5 rounded-lg flex flex-col items-center gap-2 transition-all group">
+<button type="button" onclick="setCategory('Trasporti')" class="cat-btn bg-surface-container-low hover:bg-surface-container-high p-5 rounded-lg flex flex-col items-center gap-2 transition-all group">
 <span class="material-symbols-outlined text-primary text-3xl group-hover:scale-110 transition-transform">directions_bus</span>
 <span class="text-[0.75rem] font-bold uppercase tracking-[0.05em] text-on-secondary-container">TRASPORTI</span>
 </button>
-<button class="bg-surface-container-low hover:bg-surface-container-high p-5 rounded-lg flex flex-col items-center gap-2 transition-all group">
+<button type="button" onclick="setCategory('Spesa')" class="cat-btn bg-surface-container-low hover:bg-surface-container-high p-5 rounded-lg flex flex-col items-center gap-2 transition-all group">
 <span class="material-symbols-outlined text-primary text-3xl group-hover:scale-110 transition-transform">shopping_cart</span>
 <span class="text-[0.75rem] font-bold uppercase tracking-[0.05em] text-on-secondary-container">SPESA</span>
 </button>
 </div>
 <!-- Numeric Keypad -->
 <div class="grid grid-cols-3 gap-y-4 gap-x-8 mb-12">
-<button class="h-16 flex items-center justify-center text-[1.5rem] font-semibold hover:bg-surface-container-low rounded-full transition-colors">1</button>
-<button class="h-16 flex items-center justify-center text-[1.5rem] font-semibold hover:bg-surface-container-low rounded-full transition-colors">2</button>
-<button class="h-16 flex items-center justify-center text-[1.5rem] font-semibold hover:bg-surface-container-low rounded-full transition-colors">3</button>
-<button class="h-16 flex items-center justify-center text-[1.5rem] font-semibold hover:bg-surface-container-low rounded-full transition-colors">4</button>
-<button class="h-16 flex items-center justify-center text-[1.5rem] font-semibold hover:bg-surface-container-low rounded-full transition-colors">5</button>
-<button class="h-16 flex items-center justify-center text-[1.5rem] font-semibold hover:bg-surface-container-low rounded-full transition-colors">6</button>
-<button class="h-16 flex items-center justify-center text-[1.5rem] font-semibold hover:bg-surface-container-low rounded-full transition-colors">7</button>
-<button class="h-16 flex items-center justify-center text-[1.5rem] font-semibold hover:bg-surface-container-low rounded-full transition-colors">8</button>
-<button class="h-16 flex items-center justify-center text-[1.5rem] font-semibold hover:bg-surface-container-low rounded-full transition-colors">9</button>
-<button class="h-16 flex items-center justify-center text-[1.5rem] font-semibold hover:bg-surface-container-low rounded-full transition-colors">,</button>
-<button class="h-16 flex items-center justify-center text-[1.5rem] font-semibold hover:bg-surface-container-low rounded-full transition-colors">0</button>
-<button class="h-16 flex items-center justify-center text-outline-variant hover:bg-surface-container-low rounded-full transition-colors">
+<button type="button" onclick="appendNum('1')" class="h-16 flex items-center justify-center text-[1.5rem] font-semibold hover:bg-surface-container-low rounded-full transition-colors">1</button>
+<button type="button" onclick="appendNum('2')" class="h-16 flex items-center justify-center text-[1.5rem] font-semibold hover:bg-surface-container-low rounded-full transition-colors">2</button>
+<button type="button" onclick="appendNum('3')" class="h-16 flex items-center justify-center text-[1.5rem] font-semibold hover:bg-surface-container-low rounded-full transition-colors">3</button>
+<button type="button" onclick="appendNum('4')" class="h-16 flex items-center justify-center text-[1.5rem] font-semibold hover:bg-surface-container-low rounded-full transition-colors">4</button>
+<button type="button" onclick="appendNum('5')" class="h-16 flex items-center justify-center text-[1.5rem] font-semibold hover:bg-surface-container-low rounded-full transition-colors">5</button>
+<button type="button" onclick="appendNum('6')" class="h-16 flex items-center justify-center text-[1.5rem] font-semibold hover:bg-surface-container-low rounded-full transition-colors">6</button>
+<button type="button" onclick="appendNum('7')" class="h-16 flex items-center justify-center text-[1.5rem] font-semibold hover:bg-surface-container-low rounded-full transition-colors">7</button>
+<button type="button" onclick="appendNum('8')" class="h-16 flex items-center justify-center text-[1.5rem] font-semibold hover:bg-surface-container-low rounded-full transition-colors">8</button>
+<button type="button" onclick="appendNum('9')" class="h-16 flex items-center justify-center text-[1.5rem] font-semibold hover:bg-surface-container-low rounded-full transition-colors">9</button>
+<button type="button" onclick="appendNum('.')" class="h-16 flex items-center justify-center text-[1.5rem] font-semibold hover:bg-surface-container-low rounded-full transition-colors">,</button>
+<button type="button" onclick="appendNum('0')" class="h-16 flex items-center justify-center text-[1.5rem] font-semibold hover:bg-surface-container-low rounded-full transition-colors">0</button>
+<button type="button" onclick="backspace()" class="h-16 flex items-center justify-center text-outline-variant hover:bg-surface-container-low rounded-full transition-colors">
 <span class="material-symbols-outlined text-2xl">backspace</span>
 </button>
 </div>
 <!-- Primary Action -->
-<button class="w-full bg-primary text-on-primary py-5 rounded-full font-bold text-[1rem] tracking-wide shadow-xl shadow-primary/20 active:scale-[0.98] transition-all">
+<button type="submit" class="w-full bg-primary text-on-primary py-5 rounded-full font-bold text-[1rem] tracking-wide shadow-xl shadow-primary/20 active:scale-[0.98] transition-all">
             CONFERMA VOCE
         </button>
 </main>
+<script>
+    let currentAmount = "0";
+    let currentCategory = "Altro";
+    let currentType = "expense";
+
+    function updateUI() {
+        document.getElementById('displayAmount').textContent = (currentType === 'expense' ? '-' : '+') + currentAmount;
+        document.getElementById('hiddenAmount').value = currentAmount;
+        document.getElementById('displayCategory').textContent = currentCategory;
+        document.getElementById('hiddenCategory').value = currentCategory;
+    }
+
+    function appendNum(num) {
+        if (currentAmount === "0" && num !== ".") {
+            currentAmount = num;
+        } else {
+            if (num === "." && currentAmount.includes(".")) return;
+            currentAmount += num;
+        }
+        updateUI();
+    }
+
+    function backspace() {
+        currentAmount = currentAmount.slice(0, -1);
+        if (currentAmount === "" || currentAmount === "-") currentAmount = "0";
+        updateUI();
+    }
+
+    function setCategory(cat) {
+        currentCategory = cat;
+        // Visual feedback for category
+        document.querySelectorAll('.cat-btn').forEach(btn => {
+            btn.classList.remove('border-2', 'border-primary/20');
+        });
+        event.currentTarget.classList.add('border-2', 'border-primary/20');
+        updateUI();
+    }
+
+    function setType(type) {
+        currentType = type;
+        document.getElementById('hiddenType').value = type;
+        const btnExpense = document.getElementById('btnExpense');
+        const btnIncome = document.getElementById('btnIncome');
+
+        if (type === 'expense') {
+            btnExpense.classList.add('bg-surface-container-lowest', 'text-primary', 'shadow-sm', 'font-bold');
+            btnExpense.classList.remove('text-outline-variant', 'font-medium');
+            btnIncome.classList.remove('bg-surface-container-lowest', 'text-primary', 'shadow-sm', 'font-bold');
+            btnIncome.classList.add('text-outline-variant', 'font-medium');
+        } else {
+            btnIncome.classList.add('bg-surface-container-lowest', 'text-primary', 'shadow-sm', 'font-bold');
+            btnIncome.classList.remove('text-outline-variant', 'font-medium');
+            btnExpense.classList.remove('bg-surface-container-lowest', 'text-primary', 'shadow-sm', 'font-bold');
+            btnExpense.classList.add('text-outline-variant', 'font-medium');
+        }
+        updateUI();
+    }
+</script>
+</form>
 <!-- Bottom Navigation Shell -->
-<nav class="fixed bottom-0 w-full z-50 rounded-t-[3rem] pb-safe bg-[#ffffff]/70 dark:bg-[#1a1c19]/70 backdrop-blur-3xl shadow-[0_-4px_40px_0_rgba(0,0,0,0.04)]">
+<nav class="fixed bottom-0 w-full z-50 rounded-t-[3rem] pb-safe bg-[#ffffff]/70 dark:bg-[#1a1c18]/70 backdrop-blur-3xl shadow-[0_-4px_40px_0_rgba(0,0,0,0.04)]">
 <div class="flex justify-around items-center px-4 py-3 w-full max-w-screen-xl mx-auto">
-<a class="flex flex-col items-center justify-center text-[#2f3430]/40 dark:text-[#edeeea]/40 px-5 py-2 hover:bg-[#f4f4f0] dark:hover:bg-[#3a403b] transition-colors rounded-[2rem]" href="#">
+<a class="flex flex-col items-center justify-center text-[#2f3430]/40 dark:text-[#edeeea]/40 px-5 py-2 hover:bg-[#f4f4f0] dark:hover:bg-[#3a403b] transition-colors rounded-[2rem]" href="/">
 <span class="material-symbols-outlined mb-1">home_max</span>
 <span class="font-['Manrope'] text-[10px] font-bold uppercase tracking-[0.05em]">Dashboard</span>
 </a>
-<a class="flex flex-col items-center justify-center bg-[#edeeea] dark:bg-[#2f3430] text-[#456646] dark:text-[#c6edc4] rounded-[2rem] px-5 py-2 transition-all" href="#">
+<a class="flex flex-col items-center justify-center bg-[#edeeea] dark:bg-[#2f3430] text-[#456646] dark:text-[#c6edc4] rounded-[2rem] px-5 py-2 transition-all" href="/insert">
 <span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">add_circle</span>
 <span class="font-['Manrope'] text-[10px] font-bold uppercase tracking-[0.05em]">Inserimento</span>
 </a>
-<a class="flex flex-col items-center justify-center text-[#2f3430]/40 dark:text-[#edeeea]/40 px-5 py-2 hover:bg-[#f4f4f0] dark:hover:bg-[#3a403b] transition-colors rounded-[2rem]" href="#">
+<a class="flex flex-col items-center justify-center text-[#2f3430]/40 dark:text-[#edeeea]/40 px-5 py-2 hover:bg-[#f4f4f0] dark:hover:bg-[#3a403b] transition-colors rounded-[2rem]" href="/riepilogo">
 <span class="material-symbols-outlined mb-1">event_repeat</span>
 <span class="font-['Manrope'] text-[10px] font-bold uppercase tracking-[0.05em]">Ricorrenti</span>
 </a>
-<a class="flex flex-col items-center justify-center text-[#2f3430]/40 dark:text-[#edeeea]/40 px-5 py-2 hover:bg-[#f4f4f0] dark:hover:bg-[#3a403b] transition-colors rounded-[2rem]" href="#">
+<a class="flex flex-col items-center justify-center text-[#2f3430]/40 dark:text-[#edeeea]/40 px-5 py-2 hover:bg-[#f4f4f0] dark:hover:bg-[#3a403b] transition-colors rounded-[2rem]" href="/simulatore">
 <span class="material-symbols-outlined mb-1">query_stats</span>
 <span class="font-['Manrope'] text-[10px] font-bold uppercase tracking-[0.05em]">Simulatore</span>
 </a>

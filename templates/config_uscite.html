@@ -109,6 +109,7 @@
 </div>
 </div>
 </header>
+<form action="/config-uscite" method="POST">
 <main class="pt-24 px-6 max-w-2xl mx-auto space-y-12">
 <!-- Editorial Header -->
 <section class="space-y-4">
@@ -123,7 +124,7 @@
 <section class="relative overflow-hidden rounded-xl bg-primary-container/20 p-8 flex items-center justify-between">
 <div class="relative z-10">
 <p class="font-label text-xs font-bold tracking-[0.1em] text-primary uppercase">Totale Costi Fissi</p>
-<p class="text-4xl font-extrabold text-on-primary-container mt-1">€ 1.450,00</p>
+<p class="text-4xl font-extrabold text-on-primary-container mt-1" id="totalDisplay">€ 0,00</p>
 <p class="text-sm text-on-primary-container/70 mt-2 italic">Basato sugli inserimenti attuali</p>
 </div>
 <!-- Decorative Organic Blob (The Growth Bloom) -->
@@ -143,7 +144,7 @@
 <label class="font-label text-xs font-bold tracking-widest text-on-surface-variant uppercase">Affitto / Mutuo</label>
 </div>
 <div class="relative">
-<input class="w-full bg-surface-container-lowest border-none rounded-md p-4 text-xl font-semibold focus:ring-2 focus:ring-primary/20 placeholder:text-on-surface-variant/30 text-on-surface" placeholder="0,00" type="number"/>
+<input class="amount-input w-full bg-surface-container-lowest border-none rounded-md p-4 text-xl font-semibold focus:ring-2 focus:ring-primary/20 placeholder:text-on-surface-variant/30 text-on-surface" placeholder="0,00" type="number" name="affitto" value="0"/>
 <span class="absolute right-4 top-1/2 -translate-y-1/2 font-bold text-on-surface-variant">€</span>
 </div>
 </div>
@@ -156,7 +157,7 @@
 <label class="font-label text-xs font-bold tracking-widest text-on-surface-variant uppercase">Abbonamenti</label>
 </div>
 <div class="relative">
-<input class="w-full bg-surface-container-lowest border-none rounded-md p-4 text-xl font-semibold focus:ring-2 focus:ring-primary/20 placeholder:text-on-surface-variant/30 text-on-surface" placeholder="0,00" type="number"/>
+<input class="amount-input w-full bg-surface-container-lowest border-none rounded-md p-4 text-xl font-semibold focus:ring-2 focus:ring-primary/20 placeholder:text-on-surface-variant/30 text-on-surface" placeholder="0,00" type="number" name="abbonamenti" value="0"/>
 <span class="absolute right-4 top-1/2 -translate-y-1/2 font-bold text-on-surface-variant">€</span>
 </div>
 </div>
@@ -169,7 +170,7 @@
 <label class="font-label text-xs font-bold tracking-widest text-on-surface-variant uppercase">Bollette</label>
 </div>
 <div class="relative">
-<input class="w-full bg-surface-container-lowest border-none rounded-md p-4 text-xl font-semibold focus:ring-2 focus:ring-primary/20 placeholder:text-on-surface-variant/30 text-on-surface" placeholder="0,00" type="number"/>
+<input class="amount-input w-full bg-surface-container-lowest border-none rounded-md p-4 text-xl font-semibold focus:ring-2 focus:ring-primary/20 placeholder:text-on-surface-variant/30 text-on-surface" placeholder="0,00" type="number" name="bollette" value="0"/>
 <span class="absolute right-4 top-1/2 -translate-y-1/2 font-bold text-on-surface-variant">€</span>
 </div>
 </div>
@@ -182,11 +183,30 @@
 <label class="font-label text-xs font-bold tracking-widest text-on-surface-variant uppercase">Altro</label>
 </div>
 <div class="relative">
-<input class="w-full bg-surface-container-lowest border-none rounded-md p-4 text-xl font-semibold focus:ring-2 focus:ring-primary/20 placeholder:text-on-surface-variant/30 text-on-surface" placeholder="0,00" type="number"/>
+<input class="amount-input w-full bg-surface-container-lowest border-none rounded-md p-4 text-xl font-semibold focus:ring-2 focus:ring-primary/20 placeholder:text-on-surface-variant/30 text-on-surface" placeholder="0,00" type="number" name="altro" value="0"/>
 <span class="absolute right-4 top-1/2 -translate-y-1/2 font-bold text-on-surface-variant">€</span>
 </div>
 </div>
 </section>
+
+<script>
+    const inputs = document.querySelectorAll('.amount-input');
+    const totalDisplay = document.getElementById('totalDisplay');
+
+    function updateTotal() {
+        let total = 0;
+        inputs.forEach(input => {
+            total += parseFloat(input.value) || 0;
+        });
+        totalDisplay.textContent = '€ ' + total.toLocaleString('it-IT', {minimumFractionDigits: 2});
+    }
+
+    inputs.forEach(input => {
+        input.addEventListener('input', updateTotal);
+    });
+
+    updateTotal();
+</script>
 <!-- Tip Section -->
 <section class="bg-surface-container-lowest rounded-lg p-6 shadow-sm border border-outline-variant/10 flex gap-4 items-start">
 <div class="text-primary mt-1">
@@ -206,14 +226,15 @@
 <!-- Bottom Navigation Shell -->
 <nav class="fixed bottom-0 left-0 w-full flex justify-between items-center px-10 pb-10 pt-6 bg-[#faf9f6]/70 dark:bg-[#1a1c18]/70 backdrop-blur-3xl shadow-[0_-20px_40px_rgba(0,0,0,0.03)] z-50 rounded-t-[3rem]">
 <!-- Secondary Action -->
-<button class="flex flex-col items-center justify-center text-[#2f3430] dark:text-[#edeeea] bg-[#edeeea] dark:bg-[#2f3430] rounded-full px-8 py-3 hover:brightness-110 transition-all active:scale-[0.98] duration-200">
+<a href="/config-entrate" class="flex flex-col items-center justify-center text-[#2f3430] dark:text-[#edeeea] bg-[#edeeea] dark:bg-[#2f3430] rounded-full px-8 py-3 hover:brightness-110 transition-all active:scale-[0.98] duration-200">
 <span class="material-symbols-outlined text-xl mb-0.5" data-icon="chevron_left">chevron_left</span>
 <span class="font-manrope text-[12px] font-bold tracking-widest uppercase">Indietro</span>
-</button>
+</a>
 <!-- Primary Action (Active) -->
-<button class="flex flex-col items-center justify-center bg-[#456646] text-white rounded-full px-8 py-3 hover:brightness-110 transition-all active:scale-[0.98] duration-200">
+<button type="submit" class="flex flex-col items-center justify-center bg-[#456646] text-white rounded-full px-8 py-3 hover:brightness-110 transition-all active:scale-[0.98] duration-200">
 <span class="material-symbols-outlined text-xl mb-0.5" data-icon="chevron_right">chevron_right</span>
 <span class="font-manrope text-[12px] font-bold tracking-widest uppercase">Continua</span>
 </button>
 </nav>
+</form>
 </body></html>

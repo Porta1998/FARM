@@ -125,18 +125,15 @@
 <span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">eco</span>
 <span class="font-label text-[10px] font-bold uppercase tracking-widest text-primary/70">Proiezione di Crescita</span>
 </div>
+{% if tx.type == 'expense' %}
 <p class="text-xl font-semibold leading-relaxed text-on-surface mb-8">
-                        Salvare questi <span class="text-primary font-extrabold text-2xl">€10</span> oggi significa avere <span class="text-primary font-extrabold text-2xl">€12.17</span> in più nel tuo giardino tra 5 anni.
-                    </p>
-<div class="flex items-end justify-between">
-<div>
-<p class="text-[10px] font-bold uppercase tracking-tighter text-on-surface-variant mb-1">IMPATTO STIMATO</p>
-<p class="text-3xl font-extrabold text-primary tracking-tighter">+21.7%</p>
-</div>
-<img class="w-24 h-12 opacity-60 grayscale hover:grayscale-0 transition-all" data-alt="minimal organic line chart showing a gentle upward curve in soft sage green colors on a white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKRKyMH-D5KFn48964Z0HwPwQb7bgANUcQt2Y1gexc-U7uilu2emAUBpnAxyEdPeckh3OwmWVmm_n-4fJWL4QmBlc-CaGxbOigqubslTAB0IDGZI2HTouv6haLqRN6qmVNUv5XsIgVFIwrf0G442KDaN7qfCgeWQJ65HI_JImJCJUT4U-J6qMYHLP2H9jRc4V_06oUemoNHo9bERMl3PdYUzzdY2_Ed_6Du80BRJy9qGOelmUh-_YpXWv6JRZqIRq4J9MSl3QkcjND"/>
-</div>
-</div>
-</div>
+    Questa spesa di <span class="text-primary font-extrabold text-2xl">€{{ "%.2f"|format(tx.amount) }}</span> incide per <span class="text-primary font-extrabold text-2xl">€{{ "%.2f"|format(annual_impact) }}</span> sul tuo saldo annuale.
+</p>
+{% else %}
+<p class="text-xl font-semibold leading-relaxed text-on-surface mb-8">
+    Questa entrata di <span class="text-primary font-extrabold text-2xl">€{{ "%.2f"|format(tx.amount) }}</span> aumenterà il tuo saldo annuale di <span class="text-primary font-extrabold text-2xl">€{{ "%.2f"|format(tx.amount * 12) }}</span> se ricorrente.
+</p>
+{% endif %}
 <!-- Progress Goal Card -->
 <div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm shadow-black/5">
 <div class="flex justify-between items-center mb-6">
@@ -161,12 +158,12 @@
 </div>
 <!-- Action Area -->
 <div class="mt-16 w-full max-w-md flex flex-col gap-3">
-<button class="w-full bg-primary text-on-primary font-bold py-5 rounded-full text-lg shadow-lg shadow-primary/10 active:scale-[0.98] transition-all">
+<a href="/" class="w-full bg-primary text-on-primary font-bold py-5 rounded-full text-lg shadow-lg shadow-primary/10 active:scale-[0.98] transition-all text-center">
                 Torna alla Dashboard
-            </button>
-<button class="w-full bg-transparent text-primary font-bold py-4 rounded-full text-sm active:scale-[0.98] transition-all">
-                Vedi dettagli transazione
-            </button>
+            </a>
+<a href="/insert" class="w-full bg-transparent text-primary font-bold py-4 rounded-full text-sm active:scale-[0.98] transition-all text-center">
+                Aggiungi un'altra voce
+            </a>
 </div>
 </main>
 <!-- Bottom Spacing for safe area -->
