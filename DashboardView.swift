@@ -95,8 +95,8 @@ struct DashboardView: View {
                         .font(.title3.bold())
 
                     HStack(spacing: 15) {
-                        ForecastCard(title: "1 Mese", amount: viewModel.monthlyNet, color: .white, bgColor: .white)
-                        ForecastCard(title: "6 Mesi", amount: viewModel.monthlyNet * 6, color: .white, bgColor: .white)
+                        ForecastCard(title: "1 Mese", amount: viewModel.monthlyNet, color: Color(hex: "#456646"), bgColor: .white)
+                        ForecastCard(title: "6 Mesi", amount: viewModel.monthlyNet * 6, color: Color(hex: "#456646"), bgColor: .white)
                         ForecastCard(title: "12 Mesi", amount: viewModel.monthlyNet * 12, color: .white, bgColor: Color(hex: "#456646"))
                     }
                 }
@@ -135,5 +135,29 @@ struct DashboardView: View {
             .padding()
         }
         .background(Color(hex: "#faf9f6"))
+    }
+}
+
+struct ForecastCard: View {
+    let title: String
+    let amount: Double
+    let color: Color
+    let bgColor: Color
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text(title.uppercased())
+                .font(.system(size: 8, weight: .bold))
+                .foregroundColor(color.opacity(0.6))
+
+            Text("€\(Int(amount))")
+                .font(.system(size: 16, weight: .black))
+                .foregroundColor(color)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding()
+        .background(bgColor)
+        .cornerRadius(15)
+        .shadow(color: .black.opacity(0.02), radius: 5)
     }
 }

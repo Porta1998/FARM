@@ -48,7 +48,7 @@ struct ProjectionsComparisonView: View {
                     ComparisonCard(title: "Traiettoria Attuale", amount: viewModel.projection12M, subtitle: "Basata sulle abitudini odierne", isPrimary: false)
 
                     // Extra Gain
-                    Text("+€3.420,00 EXTRA")
+                    Text("+€\(String(format: "%.2f", viewModel.extraGain12M)) EXTRA")
                         .font(.caption.bold())
                         .padding(.horizontal, 20)
                         .padding(.vertical, 10)
@@ -58,10 +58,7 @@ struct ProjectionsComparisonView: View {
                         .offset(y: 10)
                         .zIndex(1)
 
-                    let expenses = viewModel.recurringTransactions.filter { $0.type == .expense }.reduce(0) { $0 + $1.amount }
-                    let optimized12M = viewModel.projection12M + (expenses * 0.1 * 12)
-
-                    ComparisonCard(title: "Traiettoria Ottimizzata", amount: optimized12M, subtitle: "Strategia Growth Bloom", isPrimary: true)
+                    ComparisonCard(title: "Traiettoria Ottimizzata", amount: viewModel.optimizedProjection12M, subtitle: "Strategia Growth Bloom", isPrimary: true)
                 }
             }
             .padding()

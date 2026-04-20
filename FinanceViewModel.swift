@@ -49,6 +49,22 @@ class FinanceViewModel {
         currentBalance + (monthlyNet * 12)
     }
 
+    var expensesMonthly: Double {
+        recurringTransactions.filter { $0.type == TransactionType.expense.rawValue }.reduce(0) { $0 + $1.amount }
+    }
+
+    var optimizedMonthlyNet: Double {
+        monthlyNet + (expensesMonthly * 0.1) // 10% optimization
+    }
+
+    var optimizedProjection12M: Double {
+        currentBalance + (optimizedMonthlyNet * 12)
+    }
+
+    var extraGain12M: Double {
+        optimizedProjection12M - projection12M
+    }
+
     // Methods
     func addTransaction(amount: Double, category: String, type: TransactionType) {
         let newTx = Transaction(amount: amount, category: category, type: type)
@@ -93,11 +109,9 @@ class FinanceViewModel {
     }
 
     func getOptimizedData() -> [(month: Int, balance: Double)] {
-        let expenses = recurringTransactions.filter { $0.type == TransactionType.expense.rawValue }.reduce(0) { $0 + $1.amount }
-        let optimizedNet = monthlyNet + (expenses * 0.1) // 10% optimization
         var data: [(month: Int, balance: Double)] = []
         for i in 0...12 {
-            data.append((month: i, balance: currentBalance + (optimizedNet * Double(i))))
+            data.append((month: i, balance: currentBalance + (optimizedMonthlyNet * Double(i))))
         }
         return data
     }

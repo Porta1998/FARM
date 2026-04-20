@@ -30,7 +30,7 @@ struct HabitSimulatorView: View {
                                 .font(.system(size: 32, weight: .black))
                         }
                         Spacer()
-                        Text("+€3.200")
+                        Text("+€\(Int(viewModel.extraGain12M))")
                             .font(.caption.bold())
                             .padding(.horizontal, 12)
                             .padding(.vertical, 6)
