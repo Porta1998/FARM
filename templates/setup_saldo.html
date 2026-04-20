@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="it"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+</head>
+<body class="bg-[#faf9f6] text-[#2f3430] min-h-screen flex flex-col p-6">
+<form action="/setup-saldo" method="POST" class="flex-grow flex flex-col">
+<main class="flex-grow flex flex-col max-w-2xl mx-auto w-full justify-center">
+<section class="mb-12">
+<span class="text-xs font-bold uppercase tracking-widest text-[#456646] mb-4 block">Fase 1 di 3</span>
+<h1 class="text-4xl font-extrabold leading-tight tracking-tight mb-4">Benvenuto, partiamo dal tuo saldo</h1>
+<p class="text-lg font-medium opacity-70">Quanto hai in banca oggi?</p>
+</section>
+<section class="flex flex-col gap-6">
+<div class="bg-white p-12 rounded-xl flex flex-col items-center justify-center shadow-sm">
+<label class="text-[0.75rem] font-bold uppercase tracking-[0.1em] text-secondary mb-6 block">Saldo Attuale</label>
+<div class="flex items-center justify-center gap-2">
+<span class="text-[3rem] font-bold opacity-40">€</span>
+<input class="bg-transparent border-none focus:ring-0 text-6xl font-extrabold text-center w-full" id="balance" name="balance" placeholder="0.00" type="number" step="0.01" required autofocus/>
+</div>
+</div>
+</section>
+</main>
+<nav class="flex justify-between items-center py-8">
+<a href="/logout" class="text-secondary font-bold uppercase tracking-widest text-xs">Logout</a>
+<button type="submit" class="bg-[#456646] text-white rounded-full px-12 py-4 font-bold uppercase tracking-widest text-xs shadow-xl active:scale-95 transition-all">Avanti</button>
+</nav>
+</form>
+</body></html>

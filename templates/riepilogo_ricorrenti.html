@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="it">
+<head><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script></head>
+<body class="bg-[#faf9f6] p-6">
+<h2 class="text-2xl font-bold mb-6">Riepilogo</h2>
+<div class="bg-white p-8 rounded-xl shadow-sm mb-12">
+    <p>Saldo Mensile Libero: €{{ "%.2f"|format(total_income - total_expense) }}</p>
+    <p>Entrate: €{{ "%.2f"|format(total_income) }}</p>
+    <p>Uscite: €{{ "%.2f"|format(total_expense) }}</p>
+</div>
+<a href="/" class="block w-full bg-[#456646] text-white py-5 rounded-full font-bold text-center">Vai alla Dashboard</a>
+</body></html>

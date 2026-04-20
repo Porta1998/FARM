@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+<html lang="it"><head><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script></head>
+<body class="bg-[#faf9f6] p-6 flex flex-col items-center justify-center min-h-screen">
+    <h1 class="text-4xl font-black mb-4">Registrato!</h1>
+    <p class="text-center mb-12">Hai inserito una spesa di €{{ "%.2f"|format(tx.amount) }}.<br>Impatto annuale: €{{ "%.2f"|format(annual_impact) }}</p>
+    <a href="/" class="w-full max-w-xs bg-[#456646] text-white py-5 rounded-full font-bold text-center">Torna alla Dashboard</a>
+</body></html>

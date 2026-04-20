@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="it"><head>
+<meta charset="utf-8"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-[#faf9f6] p-6 pb-32">
+    <a href="/simulatore" class="mb-4 inline-block">← Indietro</a>
+    <h1 class="text-4xl font-black mb-8">Confronto Proiezioni</h1>
+
+    <div class="bg-white p-6 rounded-xl shadow-sm mb-8">
+        <canvas id="projectionChart" height="300"></canvas>
+    </div>
+
+    <div class="space-y-4">
+        <div class="bg-white p-8 rounded-xl shadow-sm">
+            <p class="text-xs font-bold opacity-50">TRAIETTORIA ATTUALE</p>
+            <p class="text-2xl font-bold">€{{ "%.2f"|format(projection_12m) }}</p>
+        </div>
+        <div class="bg-[#c6edc4] p-8 rounded-xl shadow-sm border border-[#456646]/20">
+            <p class="text-xs font-bold text-[#456646]">TRAIETTORIA OTTIMIZZATA</p>
+            <p class="text-3xl font-black text-[#456646]">€{{ "%.2f"|format(optimized_projection_12m) }}</p>
+            <p class="mt-4 font-bold">+€{{ "%.2f"|format(gain_extra) }} EXTRA</p>
+        </div>
+    </div>
+
+<script>
+    fetch('/api/chart-data').then(r => r.json()).then(data => {
+        new Chart(document.getElementById('projectionChart'), {
+            type: 'line',
+            data: {
+                labels: data.labels,
+                datasets: [
+                    { label: 'Attuale', data: data.projection, borderColor: '#777c77', borderDash:[5,5], fill: false, tension: 0.4 },
+                    { label: 'Ottimizzata', data: data.optimized, borderColor: '#456646', backgroundColor: 'rgba(69,102,70,0.1)', fill: true, tension: 0.4 }
+                ]
+            },
+            options: { responsive: true, plugins: { legend: { display: false } } }
+        });
+    });
+</script>
+</body></html>
